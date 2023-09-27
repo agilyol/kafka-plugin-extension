@@ -37,7 +37,7 @@ class ConsumerC(ABC):
 
                 elif msg.error().code() != KafkaError._PARTITION_EOF:
                     self.error_handler.log_error(msg.error(), KafkaError)
-                    raise KafkaConsumerError('Cannot consume message now')
+                    raise KafkaConsumerError('Error: Cannot Consume Message Now')
 
         except Exception as e:
             self.error_handler.handle_error(e)
