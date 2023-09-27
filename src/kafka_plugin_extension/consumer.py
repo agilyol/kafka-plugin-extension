@@ -1,14 +1,11 @@
 from abc import ABC, abstractmethod
 from confluent_kafka import Consumer, KafkaError
+from exceptions import KafkaConsumerError
 
 
-class KafkaConsumerError(Exception):
-    pass
+class ConsumerC(ABC):
 
-
-class Consumer(ABC):
-
-    def __init__(self, error_handler: callable, conf: dict,  topic: str, value_deserializer: callable):
+    def __init__(self, error_handler: callable, conf: dict, topic: str, value_deserializer: callable):
         """here is a sample of the conf dictionary
         conf = {
             'bootstrap.servers': 'your_bootstrap_servers',
@@ -16,7 +13,7 @@ class Consumer(ABC):
             'auto.offset.reset': 'earliest',
         }
         """
-        
+
         self.consumer = Consumer(conf, value_deserializer)
         self.error_handler = error_handler
         self.topic = topic
@@ -24,7 +21,7 @@ class Consumer(ABC):
 
     def stop(self):
         self.run = False
-    
+
     @abstractmethod
     def handler(self, msg):
         raise NotImplemented('Please implement handler first')

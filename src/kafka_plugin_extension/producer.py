@@ -5,12 +5,12 @@ from enum import Enum
 
 class EncodingEnum(Enum):
     JSON = 'json'
-    AVRO  = 'avro'
+    AVRO = 'avro'
 
 
 class KafkaProducer(object):
 
-    def __init__(self, conf, topic, error_handler, encoding_type, schema = None):
+    def __init__(self, conf, topic, error_handler, encoding_type, schema=None):
 
         if encoding_type == EncodingEnum.AVRO.value:
             if not schema:
@@ -26,14 +26,13 @@ class KafkaProducer(object):
         self._topic = topic
         self.error_handler = error_handler
 
-
     def publish(self, data: dict):
         try:
             # produce an event
-            self._producer.produce(topic=self._topic, value=data)
-    
+            self._producer.produce(topic=self._topic, value = data)
+
         except Exception as e:
-            # impement error handling class from error_handler.py
+            # implement error handling class from error_handler.py
             self.error_handler.handle_error(e)
 
         finally:

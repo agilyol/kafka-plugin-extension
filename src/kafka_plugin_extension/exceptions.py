@@ -1,0 +1,2 @@
+class KafkaConsumerError(Exception):
+    pass
